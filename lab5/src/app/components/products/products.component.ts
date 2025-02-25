@@ -128,7 +128,7 @@ export class ProductsComponent {
   }
 
   selectCategory(event : any){
-    this.selected = event?.target.value;
+    this.selected = event.target.value;
   }
 
   removeProduct(id : number){
