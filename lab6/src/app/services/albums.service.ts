@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 export interface Album {
   id: number;
@@ -20,24 +19,32 @@ export interface Photo {
   providedIn: 'root'
 })
 export class AlbumsService {
-  private albumsUrl = 'assets/albums.json';
-  private photosUrl = 'assets/photos.json';
+  private apiUrl = 'http://localhost:3000/albums';
+  private photosUrl = 'http://localhost:3000/photos';
 
   constructor(private http: HttpClient) {}
 
   getAlbums(): Observable<Album[]> {
-    return this.http.get<Album[]>(this.albumsUrl);
+    return this.http.get<Album[]>(this.apiUrl);
   }
 
-  getAlbumById(id: number): Observable<Album | undefined> {
-    return this.http.get<Album[]>(this.albumsUrl).pipe(
-      map((albums: Album[]) => albums.find((album: Album) => album.id === id))
-    );
+  getAlbumById(id: number): Observable<Album> {
+    return this.http.get<Album>(`${this.apiUrl}/${id}`);
+  }
+
+  createAlbum(album: Album): Observable<Album> {
+    return this.http.post<Album>(this.apiUrl, album);
+  }
+
+  updateAlbum(id: number, album: Album): Observable<Album> {
+    return this.http.put<Album>(`${this.apiUrl}/${id}`, album);
+  }
+
+  deleteAlbum(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   getPhotosByAlbumId(albumId: number): Observable<Photo[]> {
-    return this.http.get<Photo[]>(this.photosUrl).pipe(
-      map((photos: Photo[]) => photos.filter((photo: Photo) => photo.albumId === albumId))
-    );
+    return this.http.get<Photo[]>(`${this.photosUrl}?albumId=${albumId}`);
   }
 }
