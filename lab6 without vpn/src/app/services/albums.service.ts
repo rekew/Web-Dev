@@ -19,8 +19,8 @@ export interface Photo {
   providedIn: 'root'
 })
 export class AlbumsService {
-  private apiUrl = 'https://jsonplaceholder.typicode.com/album';
-  private photosUrl = 'https://jsonplaceholder.typicode.com/albums/1/photos';
+  private apiUrl = 'http://localhost:3000/albums';
+  private photosUrl = 'http://localhost:3000/photos';
 
   constructor(private http: HttpClient) {}
 

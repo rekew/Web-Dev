@@ -16,7 +16,7 @@ export class AlbumComponent implements OnInit {
   albums: any[] = [];
   newAlbumTitle: string = '';
 
-  private apiUrl = 'https://jsonplaceholder.typicode.com/albums'; 
+  private apiUrl = 'http://localhost:3000/albums'; 
 
   constructor(private http: HttpClient, private router: Router) {} 
 
