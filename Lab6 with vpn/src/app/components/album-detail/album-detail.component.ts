@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms'
 })
 export class AlbumDetailComponent implements OnInit{
   album: any;
+  errorMessage: string = '';
 
   constructor(private route : ActivatedRoute, private router : Router, private albumsService : AlbumsService){}
 
@@ -21,7 +22,16 @@ export class AlbumDetailComponent implements OnInit{
   }
 
   saveAlbum() {
-    this.albumsService.updateAlbum(this.album).subscribe();
+    this.albumsService.updateAlbum(this.album).subscribe({
+      next: () => {
+        console.log('Album saved successfully');
+        alert('Album name updated!');
+      },
+      error: (err) => {
+        console.error('Error saving album:', err);
+        this.errorMessage = 'Failed to save album';
+      }
+    });
   }
 
   goBack() {
